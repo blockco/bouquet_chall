@@ -10,16 +10,10 @@ var request = require('request');
 console.log("test")
 
 request('https://data.marincounty.org/resource/mw3d-ud6d.json?$query=select%20amount,department,month_and_year', function (error, response, body) {
-  if (!error && response.statusCode === 200) {
+  if (!error && response.statusCode == 200) {
+      body = JSON.parse(body)
     console.log(body) // Print the google web page.
-    var i = 0;
-    while (body[i])
-    {
-        console.log(body[i]['amount']);
-        i = i + 1;
-    }
   }
-
 })
 
 var options = {
