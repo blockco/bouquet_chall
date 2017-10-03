@@ -8,11 +8,18 @@ var Highcharts = require('highcharts');
 var request = require('request');
 
 console.log("test")
+var info = []
 
-request('https://data.marincounty.org/resource/mw3d-ud6d.json?$query=select%20amount,department,month_and_year', function (error, response, body) {
+request('https://data.marincounty.org/resource/mw3d-ud6d.json?month_and_year=2016-08', function (error, response, body) {
   if (!error && response.statusCode == 200) {
       body = JSON.parse(body)
-    console.log(body) // Print the google web page.
+    console.log(body[0]) // Print the google web page.
+    var i = 0;
+    while (body[i])
+    {
+        if (info.includes[body[i].department])
+        i++;
+    }
   }
 })
 
@@ -91,10 +98,15 @@ var options = {
 require('highcharts/modules/funnel')(Highcharts);
 
 // ReactDOM.render(<App />, document.getElementById('root'));
-var element = React.createElement(Chart, { container: 'chart', options: options });
-ReactDOM.render(element, document.getElementById('Chart'));
+// var element = React.createElement(Chart, { container: 'chart', options: options });
+// ReactDOM.render(element, document.getElementById('Chart'));
 
-ReactDOM.render(<MonthPicker onChange={(date)=>{console.log(date);}} />,
+ReactDOM.render(<MonthPicker onChange={(date)=>{
+    console.log(date);
+    console.log(options.series.data)
+    var element = React.createElement(Chart, { container: 'chart', options: options, date: date });
+    ReactDOM.render(element, document.getElementById('Chart'));
+}} />,
   document.getElementById('root')
 );
 registerServiceWorker();
